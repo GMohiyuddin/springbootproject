@@ -84,8 +84,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</label> <a href="#">Products <span class="fa fa-angle-down"
 								aria-hidden="true"></span></a> <input type="checkbox" id="drop-2" />
 							<ul>
-								<li><a href="seller-registration">Upload Product</a></li>
-								<li><a href="customer-registration">Manage Product</a></li>
+								<li><a href="seller-upload-product?id=<%= s.getId() %>">Upload Product</a></li>
+								<li><a href="seller-manage-product?id=<%= s.getId() %>">Manage Product</a></li>
 							</ul>
 						</li>
 						<li>
@@ -94,7 +94,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</label> <a href="#"><%=s.getName() %> <span class="fa fa-angle-down"
 								aria-hidden="true"></span></a> <input type="checkbox" id="drop-2" />
 							<ul>
-								<li><a href="seller-profile">Profile</a></li>
+								<li><a href="seller-profile?id=<%= s.getId() %>">Profile</a></li>
 								<li><a href="seller-change-password?id=<%= s.getId() %>">Change Password</a></li>
 								<li><a href="seller-logout">Logout</a></li>
 							</ul>

@@ -1,6 +1,7 @@
 package com.example.ToDoWebApp.controller;
 
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
-//@SessionAttributes("Seller")
 public class SellerController {
 
 	@Autowired
@@ -59,7 +59,6 @@ public class SellerController {
 		if (s != null) {
 			session.setAttribute("seller", s);
 			model.addAttribute("seller", s);
-			System.out.println("from login seller method " + s);
 			return "seller-home";
 		} else {
 			model.addAttribute("error", "invalid email and password");
@@ -72,7 +71,6 @@ public class SellerController {
 	public String sellerhome(ModelMap model, HttpSession session, @RequestParam int id, @Valid Seller s) {
 		Optional<Seller> s1 = service.getsellerbyid(id);
 		model.addAttribute("seller", s1);
-		System.out.println("from sellerhome method " + s1);
 		return "seller-home";
 	}
 
@@ -102,20 +100,19 @@ public class SellerController {
 		service.updateuser(s);
 		model.addAttribute("seller", s);
 		session.setAttribute("seller", s);
-		System.out.println(s);
 		return "redirect:seller-profile";
 	}
 
 	@GetMapping("seller-change-password")
-	public String changepasswordpage(@Valid Seller s, HttpSession session,ModelMap model, @RequestParam int id) {
+	public String changepasswordpage(@Valid Seller s, HttpSession session, ModelMap model, @RequestParam int id) {
 		Optional<Seller> s1 = service.getsellerbyid(id);
 		model.addAttribute("seller", s1);
 		return "seller-change-password";
 	}
 
 	@PostMapping("/updatepassword")
-	public String updatepassword(@RequestParam String op, @RequestParam int id, @RequestParam String np, @RequestParam String cnp,
-			ModelMap model, HttpSession session, @Valid Seller s) {
+	public String updatepassword(@RequestParam String op, @RequestParam int id, @RequestParam String np,
+			@RequestParam String cnp, ModelMap model, HttpSession session, @Valid Seller s) {
 		Optional<Seller> s1 = service.getsellerbyid(id);
 		Seller s11 = (Seller) session.getAttribute("seller");
 		if (op.equals(s11.getPassword())) {
@@ -132,4 +129,78 @@ public class SellerController {
 		}
 		return "seller-change-password";
 	}
+
+	@GetMapping("seller-forget-password")
+	public String forgetpasswordpage() {
+		return "seller-forget-password";
+	}
+
+	@PostMapping("otp_varification_page")
+	public String getemail(@RequestParam String email, ModelMap model) {
+		Seller s1 = service.emailexist(email);
+		if (s1 != null) {
+			Random r = new Random();
+			int otp1 = r.nextInt(999999);
+			model.addAttribute("opt1", otp1);
+			System.out.println(otp1);
+			model.addAttribute("email", email);
+			return "seller-verify-otp";
+		} else {
+			model.addAttribute("error1", "Email do not exist");
+			return "seller-forget-password";
+		}
+	}
+
+	@PostMapping("getverify")
+	public String getverify(@RequestParam String otp2, @RequestParam String otp1, @RequestParam String email,
+			ModelMap model) {
+		if (otp2.equals(otp1)) {
+			model.addAttribute("email", email);
+			return "seller-new-password";
+		} else {
+			model.addAttribute("error", "otp did not matched");
+			System.out.println(otp1);
+			System.out.println(otp2);
+			return "seller-verify-otp";
+
+		}
+	}
+
+	@PostMapping("newpassword")
+	public String sellernewpassword(ModelMap model, @RequestParam String email, @RequestParam String np,
+			@RequestParam String cnp) {
+		Seller s = service.emailexist(email);
+		if (np.equals(cnp)) {
+			s.setPassword(np);
+			service.updateuser(s);
+			return "seller-login";
+		} else {
+			model.addAttribute("msg", "Both passwords are different");
+			return "seller-new-password";
+		}
+	}
+	
+	@GetMapping("seller-upload-product")
+	public String uploadproductpage(@Valid Seller s, HttpSession session, ModelMap model, @RequestParam int id) {
+		Optional<Seller> s1 = service.getsellerbyid(id);
+		model.addAttribute("seller", s1);
+		return "seller-upload-product";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

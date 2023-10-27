@@ -32,4 +32,7 @@ public class SellerService {
 	public void updateuser(Seller s) {
 		repo.save(s);
 	}
+	public Seller emailexist(String email) {
+		return repo.findbyemail(email);
+	}
 }

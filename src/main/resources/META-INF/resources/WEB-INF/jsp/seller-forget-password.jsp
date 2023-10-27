@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
- 	 
-
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
@@ -64,10 +62,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								aria-hidden="true"></span>ootie</a>
 						</h1>
 					</div>
+
 					<label for="drop" class="toggle">Menu</label> <input
 						type="checkbox" id="drop" />
 					<ul class="menu mt-2">
-						<li><a href="seller-home">Home</a></li>
+						<li><a href="index">Home</a></li>
 						<li><a href="about.html">About</a></li>
 						<li><a href="blog.html">Blog</a></li>
 						<li>
@@ -102,7 +101,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!--//main-content-->
 	<!---->
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+		<li class="breadcrumb-item"><a href="index">Home</a></li>
 		<li class="breadcrumb-item active">Seller Login</li>
 	</ol>
 	<!---->
@@ -115,27 +114,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</h3>
 
 			<h5 class="tittle text-center">
-				<% if (request.getAttribute("error") != null) { %>
+				<% if (request.getAttribute("error1") != null) { %>
 			        <div style="color: red;">
-			            <%= request.getAttribute("error") %>
+			            <%= request.getAttribute("error1") %>
 			        </div>
 			    <% } %>
 			</h5>
 			<div class="row contact-main-info mt-5">
 				<div class="col-md-12 contact-right-content">
-					<form action="/loginseller" method="post">
-						<input type="email" class="email" name="email" placeholder="Email"
-							required=""> <input type="password" class="email"
-							name="password" placeholder="Password" required="">
+					<form action="otp_varification_page" method="post">
+						<input type="email" class="email" name="email" placeholder="Email" required=""> 
 						<div class="text-center">
-							<input type="submit" name="action" value="login">
+							<input type="submit" name="action" value="GET OTP">
 						</div>
 					</form>
 				</div>
 			</div>
-			<h5 class="tittle text-center">
-				<a href="seller-forget-password">Forget Password ?</a>
-			</h5>
+			
 		</div>
 	</section>
 

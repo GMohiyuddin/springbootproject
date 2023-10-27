@@ -83,15 +83,15 @@ else{
 					<label for="drop" class="toggle">Menu</label> <input
 						type="checkbox" id="drop" />
 					<ul class="menu mt-2">
-						<li class="active"><a href="seller-home">Home</a></li>
+						<li class="active"><a href="seller-home?id=<%= s.getId() %>">Home</a></li>
 						<li>
 							<!-- First Tier Drop Down --> <label for="drop-2" class="toggle">Drop
 								Down <span class="fa fa-angle-down" aria-hidden="true"></span>
 						</label> <a href="#">Products <span class="fa fa-angle-down"
 								aria-hidden="true"></span></a> <input type="checkbox" id="drop-2" />
 							<ul>
-								<li><a href="seller-upload-product">Upload Product</a></li>
-								<li><a href="seller-manage-product">Manage Product</a></li>
+								<li><a href="seller-upload-product?id=<%= s.getId() %>">Upload Product</a></li>
+								<li><a href="seller-manage-product?id=<%= s.getId() %>">Manage Product</a></li>
 							</ul>
 						</li>
 						<li>

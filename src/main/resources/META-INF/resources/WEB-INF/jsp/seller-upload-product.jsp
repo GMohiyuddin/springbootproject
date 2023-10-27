@@ -1,13 +1,13 @@
+<%@page import="com.example.ToDoWebApp.model.Seller"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
- 	 
-
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -50,45 +50,53 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </head>
 
 <body>
+<%
+Seller s = null;
+if(session.getAttribute("seller")!=null){
+	s = (Seller)session.getAttribute("seller");
+}
+else{
+	response.sendRedirect("seller-login.jsp");
+}
 
+%>
 	<!-- mian-content -->
 	<div class="main-banner inner" id="home">
 		<!-- header -->
 		<header class="header">
 			<div class="container-fluid px-lg-5">
 				<!-- nav -->
-				<nav class="py-4">
+			<nav class="py-4">
 					<div id="logo">
 						<h1>
 							<a href="index.html"><span class="fa fa-bold"
 								aria-hidden="true"></span>ootie</a>
 						</h1>
 					</div>
+
 					<label for="drop" class="toggle">Menu</label> <input
 						type="checkbox" id="drop" />
 					<ul class="menu mt-2">
-						<li><a href="seller-home">Home</a></li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="blog.html">Blog</a></li>
+						<li class="active"><a href="seller-home?id=<%= s.getId() %>">Home</a></li>
 						<li>
 							<!-- First Tier Drop Down --> <label for="drop-2" class="toggle">Drop
 								Down <span class="fa fa-angle-down" aria-hidden="true"></span>
-						</label> <a href="#">Register <span class="fa fa-angle-down"
+						</label> <a href="#">Products <span class="fa fa-angle-down"
 								aria-hidden="true"></span></a> <input type="checkbox" id="drop-2" />
 							<ul>
-								<li><a href="seller-registration">As Seller</a></li>
-								<li><a href="customer-registration">As Customer</a></li>
+								<li><a href="seller-upload-product?id=<%= s.getId() %>">Upload Product</a></li>
+								<li><a href="seller-manage-product?id=<%= s.getId() %>">Manage Product</a></li>
 							</ul>
 						</li>
-						<li class="active">
+						<li>
 							<!-- First Tier Drop Down --> <label for="drop-2" class="toggle">Drop
 								Down <span class="fa fa-angle-down" aria-hidden="true"></span>
-						</label> <a href="#">Login <span class="fa fa-angle-down"
+						</label> <a href="#"><%=s.getName() %> <span class="fa fa-angle-down"
 								aria-hidden="true"></span></a> <input type="checkbox" id="drop-2" />
 							<ul>
-								<li><a href="seller-login">As Seller</a></li>
-								<li><a href="customer-login">As Customer</a></li>
-								<li><a href="admin-login">As Admin</a></li>
+								<li><a href="seller-profile?id=<%= s.getId() %>">Profile</a></li>
+								<li><a href="seller-change-password?id=<%= s.getId() %>">Change Password</a></li>
+								<li><a href="seller-logout">Logout</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -102,8 +110,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!--//main-content-->
 	<!---->
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-		<li class="breadcrumb-item active">Seller Login</li>
+		<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+		<li class="breadcrumb-item active">Seller Upload Product</li>
 	</ol>
 	<!---->
 	<!--// mian-content -->
@@ -111,31 +119,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<section class="ab-info-main py-5">
 		<div class="container py-3">
 			<h3 class="tittle text-center">
-				<span class="sub-tittle">Find Us</span> Seller Login
+				<span class="sub-tittle">Find Us</span> Seller Upload Product
 			</h3>
-
-			<h5 class="tittle text-center">
-				<% if (request.getAttribute("error") != null) { %>
-			        <div style="color: red;">
-			            <%= request.getAttribute("error") %>
-			        </div>
-			    <% } %>
-			</h5>
 			<div class="row contact-main-info mt-5">
 				<div class="col-md-12 contact-right-content">
-					<form action="/loginseller" method="post">
-						<input type="email" class="email" name="email" placeholder="Email"
-							required=""> <input type="password" class="email"
-							name="password" placeholder="Password" required="">
+					<form action="UploadProduct" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="<%=s.getId()%>">
+						<input type="file" name="image" placeholder="Name"accept="image/*">
+						<input type="text" name="pname" placeholder="Product Name" required="">
+						<input type="text" name="pprice" placeholder="Procduct Price" required="">
+						<input type="text" name="pcategory" placeholder="Product Category" class="email" required=""> 
+						<input type="text" name="pdesc" placeholder="Product Description" class="email"  required="">
 						<div class="text-center">
-							<input type="submit" name="action" value="login">
+							<input type="submit" name="action" value="upload">
 						</div>
 					</form>
 				</div>
+	
+
 			</div>
-			<h5 class="tittle text-center">
-				<a href="seller-forget-password">Forget Password ?</a>
-			</h5>
 		</div>
 	</section>
 

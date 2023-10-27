@@ -1,9 +1,12 @@
 package com.example.ToDoWebApp.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Seller {
@@ -12,6 +15,9 @@ public class Seller {
 	private int id;
 	private String name, address, email,password;
 	private long contact;
+	
+	@OneToMany
+	private List<Product> products;
 
 	public Seller(int id, String name, String address, String email, long contact, String password) {
 		super();
@@ -37,6 +43,12 @@ public class Seller {
 		return id;
 	}
 
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -76,6 +88,6 @@ public class Seller {
 	@Override
 	public String toString() {
 		return "Seller [id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + ", password="
-				+ password + ", contact=" + contact + "]";
+				+ password + ", contact=" + contact + ", products=" + products + "]";
 	}
 }
